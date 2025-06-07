@@ -8,145 +8,292 @@
         "env": []
     },
     {
-        "id": "json-split",
+        "id": "e69410274d54c6c9",
+        "type": "mqtt in",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Receber do ESP32",
+        "topic": "chuva/monitoramento",
+        "qos": "0",
+        "datatype": "json",
+        "broker": "23ad8424cd660323",
+        "inputs": 0,
+        "x": 350,
+        "y": 280,
+        "wires": [
+            [
+                "a53a88271d84bed1"
+            ]
+        ]
+    },
+    {
+        "id": "a53a88271d84bed1",
         "type": "function",
         "z": "7bdee95ade8fd0e1",
         "name": "Separar Dados",
         "func": "msg1 = { payload: msg.payload.umidadeSolo };\nmsg2 = { payload: msg.payload.nivelAgua };\nmsg3 = { payload: msg.payload.temperatura };\nmsg4 = { payload: msg.payload.umidadeAr };\nreturn [ [msg1], [msg2], [msg3], [msg4] ];",
         "outputs": 4,
-        "timeout": "",
         "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 660,
-        "y": 340,
+        "x": 560,
+        "y": 280,
         "wires": [
             [
-                "g1"
+                "c4c499c7cc3127bd"
             ],
             [
-                "g2"
+                "20b5ddc2d0ca628d"
             ],
             [
-                "g3"
+                "010d2c950a5f2a8a"
             ],
             [
-                "g4"
+                "bc0744ed94705177"
             ]
         ]
     },
     {
-        "id": "g1",
+        "id": "c4c499c7cc3127bd",
         "type": "ui_gauge",
         "z": "7bdee95ade8fd0e1",
-        "name": "Umidade Solo",
+        "name": "Umidade do Solo",
         "group": "gaia-group",
         "order": 1,
         "width": 6,
-        "height": 4,
+        "height": 3,
         "gtype": "gage",
         "title": "Umidade do Solo",
         "label": "%",
-        "format": "{{value}}",
+        "format": "{{payload}}",
         "min": 0,
         "max": 4095,
-        "x": 920,
-        "y": 240,
+        "x": 870,
+        "y": 220,
         "wires": []
     },
     {
-        "id": "g2",
+        "id": "20b5ddc2d0ca628d",
         "type": "ui_gauge",
         "z": "7bdee95ade8fd0e1",
         "name": "Nível da Água",
         "group": "gaia-group",
         "order": 2,
         "width": 6,
-        "height": 4,
+        "height": 3,
         "gtype": "donut",
         "title": "Nível da Água",
         "label": "nível",
-        "format": "{{value}}",
+        "format": "{{payload}}",
         "min": 0,
         "max": 4095,
-        "x": 920,
-        "y": 300,
+        "x": 860,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "g3",
+        "id": "010d2c950a5f2a8a",
         "type": "ui_gauge",
         "z": "7bdee95ade8fd0e1",
-        "name": "Temperatura",
+        "name": "Temperatura Local (Sensor ESP32)",
         "group": "gaia-group",
         "order": 3,
         "width": 6,
-        "height": 4,
+        "height": 3,
         "gtype": "compass",
-        "title": "Temperatura",
+        "title": "Temperatura Local (Sensor ESP32)",
         "label": "°C",
-        "format": "{{value}}",
+        "format": "{{payload}}",
         "min": 0,
         "max": 50,
         "x": 920,
-        "y": 360,
+        "y": 320,
         "wires": []
     },
     {
-        "id": "g4",
+        "id": "bc0744ed94705177",
         "type": "ui_gauge",
         "z": "7bdee95ade8fd0e1",
         "name": "Umidade do Ar",
         "group": "gaia-group",
         "order": 4,
         "width": 6,
-        "height": 4,
+        "height": 3,
         "gtype": "donut",
         "title": "Umidade do Ar",
         "label": "%",
-        "format": "{{value}}",
+        "format": "{{payload}}",
         "min": 0,
         "max": 100,
-        "x": 920,
-        "y": 420,
+        "x": 860,
+        "y": 380,
         "wires": []
     },
     {
-        "id": "txt",
+        "id": "d2a320c74cc63d6f",
         "type": "ui_text",
         "z": "7bdee95ade8fd0e1",
         "group": "gaia-group",
         "order": 5,
         "width": 12,
-        "height": 2,
-        "name": "Descrição",
-        "label": "Sobre o projeto Gaia",
-        "format": "Este painel realiza o monitoramento de umidade do solo, nível da água, temperatura e umidade do ar em tempo real para prevenção de alagamentos.",
-        "x": 900,
+        "height": 1,
+        "name": "Texto Descrição",
+        "label": "Sobre a Gaia",
+        "format": "Monitoramento inteligente de umidade e alagamento com ESP32",
+        "x": 820,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "0e476848e7ca8ce8",
+        "type": "ui_text_input",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Pesquisar Cidade",
+        "label": "Digite uma cidade:",
+        "group": "gaia-group",
+        "order": 6,
+        "width": 6,
+        "height": 1,
+        "passthru": true,
+        "mode": "text",
+        "delay": "500",
+        "x": 360,
+        "y": 500,
+        "wires": [
+            [
+                "422a8f266dd618b1"
+            ]
+        ]
+    },
+    {
+        "id": "422a8f266dd618b1",
+        "type": "function",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Montar URL API",
+        "func": "const cidade = msg.payload;\nmsg.url = `https://api.openweathermap.org/data/2.5/weather?q=${cidade}&appid=1f2a2cf908b347422fa79ae869dfd5d8&units=metric&lang=pt_br`;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 500,
+        "wires": [
+            [
+                "fa574c84885156b1"
+            ]
+        ]
+    },
+    {
+        "id": "fa574c84885156b1",
+        "type": "http request",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Buscar Clima",
+        "method": "GET",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "x": 790,
+        "y": 500,
+        "wires": [
+            [
+                "dafe934827f54593"
+            ]
+        ]
+    },
+    {
+        "id": "dafe934827f54593",
+        "type": "function",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Verificar Erro",
+        "func": "if (!msg.payload || !msg.payload.weather || !msg.payload.name) {\n    return [null, { payload: \"Cidade não encontrada.\" }];\n}\n\nreturn [msg, { payload: \"\" }];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 970,
+        "y": 500,
+        "wires": [
+            [
+                "f05cd863845e947e"
+            ],
+            [
+                "52ba75e26b77dcf5"
+            ]
+        ]
+    },
+    {
+        "id": "f05cd863845e947e",
+        "type": "ui_text",
+        "z": "7bdee95ade8fd0e1",
+        "group": "gaia-group",
+        "order": 7,
+        "width": 6,
+        "height": 1,
+        "name": "Resposta Clima",
+        "label": "Clima na Cidade Pesquisada",
+        "format": "{{msg.payload.name}}: {{msg.payload.weather[0].description}} - {{msg.payload.main.temp}}°C",
+        "x": 1220,
         "y": 480,
         "wires": []
     },
     {
-        "id": "dab29c2b73e1a5df",
-        "type": "mqtt in",
+        "id": "52ba75e26b77dcf5",
+        "type": "ui_text",
         "z": "7bdee95ade8fd0e1",
-        "name": "",
-        "topic": "chuva/monitoramento",
-        "qos": "2",
-        "datatype": "auto-detect",
-        "broker": "cdc2034c1647e232",
-        "nl": false,
-        "rap": true,
-        "rh": 0,
-        "inputs": 0,
-        "x": 380,
-        "y": 340,
-        "wires": [
-            [
-                "json-split"
-            ]
-        ]
+        "group": "gaia-group",
+        "order": 8,
+        "width": 6,
+        "height": 1,
+        "name": "Erro",
+        "label": "Erro:",
+        "format": "{{msg.payload}}",
+        "x": 1190,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "dead9281aaf5e572",
+        "type": "ui_text",
+        "z": "7bdee95ade8fd0e1",
+        "group": "gaia-group",
+        "order": 0,
+        "width": 12,
+        "height": 1,
+        "name": "Separador Clima",
+        "label": "",
+        "format": "<b>Informações da cidade pesquisada</b>",
+        "x": 1030,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "cbfd8e055c53adf6",
+        "type": "ui_text",
+        "z": "7bdee95ade8fd0e1",
+        "group": "gaia-group",
+        "order": 0,
+        "width": 12,
+        "height": 1,
+        "name": "Separador Local",
+        "label": "",
+        "format": "<b>Informações do sensor ESP32</b>",
+        "x": 840,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "23ad8424cd660323",
+        "type": "mqtt-broker",
+        "name": "Broker HiveMQ",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "",
+        "usetls": false,
+        "compatmode": false,
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "closeTopic": "",
+        "closePayload": "",
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": ""
     },
     {
         "id": "gaia-group",
@@ -157,37 +304,6 @@
         "disp": true,
         "width": "12",
         "collapse": false
-    },
-    {
-        "id": "cdc2034c1647e232",
-        "type": "mqtt-broker",
-        "name": "Conector",
-        "broker": "broker.hivemq.com",
-        "port": 1883,
-        "clientid": "",
-        "autoConnect": true,
-        "usetls": false,
-        "protocolVersion": 4,
-        "keepalive": 60,
-        "cleansession": true,
-        "autoUnsubscribe": true,
-        "birthTopic": "",
-        "birthQos": "0",
-        "birthRetain": "false",
-        "birthPayload": "",
-        "birthMsg": {},
-        "closeTopic": "",
-        "closeQos": "0",
-        "closeRetain": "false",
-        "closePayload": "",
-        "closeMsg": {},
-        "willTopic": "",
-        "willQos": "0",
-        "willRetain": "false",
-        "willPayload": "",
-        "willMsg": {},
-        "userProps": "",
-        "sessionExpiry": ""
     },
     {
         "id": "gaia-tab",
