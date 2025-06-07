@@ -1,0 +1,199 @@
+[
+    {
+        "id": "7bdee95ade8fd0e1",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "json-split",
+        "type": "function",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Separar Dados",
+        "func": "msg1 = { payload: msg.payload.umidadeSolo };\nmsg2 = { payload: msg.payload.nivelAgua };\nmsg3 = { payload: msg.payload.temperatura };\nmsg4 = { payload: msg.payload.umidadeAr };\nreturn [ [msg1], [msg2], [msg3], [msg4] ];",
+        "outputs": 4,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 340,
+        "wires": [
+            [
+                "g1"
+            ],
+            [
+                "g2"
+            ],
+            [
+                "g3"
+            ],
+            [
+                "g4"
+            ]
+        ]
+    },
+    {
+        "id": "g1",
+        "type": "ui_gauge",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Umidade Solo",
+        "group": "gaia-group",
+        "order": 1,
+        "width": 6,
+        "height": 4,
+        "gtype": "gage",
+        "title": "Umidade do Solo",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 4095,
+        "x": 920,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "g2",
+        "type": "ui_gauge",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Nível da Água",
+        "group": "gaia-group",
+        "order": 2,
+        "width": 6,
+        "height": 4,
+        "gtype": "donut",
+        "title": "Nível da Água",
+        "label": "nível",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 4095,
+        "x": 920,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "g3",
+        "type": "ui_gauge",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Temperatura",
+        "group": "gaia-group",
+        "order": 3,
+        "width": 6,
+        "height": 4,
+        "gtype": "compass",
+        "title": "Temperatura",
+        "label": "°C",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 50,
+        "x": 920,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "g4",
+        "type": "ui_gauge",
+        "z": "7bdee95ade8fd0e1",
+        "name": "Umidade do Ar",
+        "group": "gaia-group",
+        "order": 4,
+        "width": 6,
+        "height": 4,
+        "gtype": "donut",
+        "title": "Umidade do Ar",
+        "label": "%",
+        "format": "{{value}}",
+        "min": 0,
+        "max": 100,
+        "x": 920,
+        "y": 420,
+        "wires": []
+    },
+    {
+        "id": "txt",
+        "type": "ui_text",
+        "z": "7bdee95ade8fd0e1",
+        "group": "gaia-group",
+        "order": 5,
+        "width": 12,
+        "height": 2,
+        "name": "Descrição",
+        "label": "Sobre o projeto Gaia",
+        "format": "Este painel realiza o monitoramento de umidade do solo, nível da água, temperatura e umidade do ar em tempo real para prevenção de alagamentos.",
+        "x": 900,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "dab29c2b73e1a5df",
+        "type": "mqtt in",
+        "z": "7bdee95ade8fd0e1",
+        "name": "",
+        "topic": "chuva/monitoramento",
+        "qos": "2",
+        "datatype": "auto-detect",
+        "broker": "cdc2034c1647e232",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 380,
+        "y": 340,
+        "wires": [
+            [
+                "json-split"
+            ]
+        ]
+    },
+    {
+        "id": "gaia-group",
+        "type": "ui_group",
+        "name": "Sensores Ambientais",
+        "tab": "gaia-tab",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false
+    },
+    {
+        "id": "cdc2034c1647e232",
+        "type": "mqtt-broker",
+        "name": "Conector",
+        "broker": "broker.hivemq.com",
+        "port": 1883,
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": 4,
+        "keepalive": 60,
+        "cleansession": true,
+        "autoUnsubscribe": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthRetain": "false",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closeRetain": "false",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willRetain": "false",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    },
+    {
+        "id": "gaia-tab",
+        "type": "ui_tab",
+        "name": "Gaia Monitoramento",
+        "icon": "dashboard",
+        "order": 1
+    }
+]
